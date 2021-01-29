@@ -13,7 +13,31 @@ const routes = [
   {
     path: "/home",
     component: () =>
-      import("../components/home.vue")
+      import("../components/home.vue"),
+      redirect: '/homePage',
+      children:[
+        {
+          path:'/homePage',
+          component: () =>
+          import("../components/content/homePage.vue")
+        },
+        {
+          path:'/basic',
+          component: () =>
+          import("../components/content/form/basic.vue")
+        },
+        {
+          path:'/sort',
+          component: () =>
+          import("../components/content/form/sort.vue")
+        },
+        {
+          path:'/fliter',
+          component: () =>
+          import("../components/content/form/fliter.vue")
+        },
+     
+      ]
   }
 ];
 

@@ -1,45 +1,36 @@
 <template>
-  <div id="app">
-    <h1>VUE-ADMIN后台管理系统</h1>
-    <div class="box">
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
-      >
-        <el-form-item prop="unsename">
-          <el-input v-model="ruleForm.unsename" placeholder="请输入账号">
-            <i slot="prefix" class="el-icon-user-solid"></i>
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            v-model="ruleForm.password"
-            type="password"
-            placeholder="请输入密码"
-          >
-            <i slot="prefix" class="el-icon-key" ></i>
-            <i slot="prefix" class="el-icon-view view" style="cursor: pointer"></i>
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="yanzhengma">
-          <el-input v-model="ruleForm.yanzhengma" class="input1">
-            <i slot="prefix" class="el-icon-s-shop"></i>
-          </el-input>
-          <div class="yan">
-            <validateCode></validateCode>
-          </div>
-        </el-form-item>
-        <el-button type="primary" class="btn">登录系统</el-button>
-      </el-form>
-    </div>
+  <div>
+    <el-card class="box-card">
+      <div class="text item">
+        <div class="box">基本表格（包含自定义模板，filter，分页组件）</div>
+
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column prop="username" label="用户名" width="120">
+          </el-table-column>
+          <el-table-column label="头像" align="center" width="80">
+            <template slot-scope="scope">
+              <img
+                :src="scope.row.avatar"
+                alt="用户头像"
+                width="42"
+                height="42"
+                style="border-radius: 50%"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column label="评分" prop="score" align="center" width="130">
+            <!-- <template slot-scope="scope">
+              <score :size="36" :score="scope.row.score"></score>
+            </template> -->
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script>
-import validateCode from '@/components/ValidateCode/index';
+// import score from 'src/components/Score/index.vue';
 export default {
   // 组件名称
   name: "demo",
@@ -47,28 +38,28 @@ export default {
   props: [],
   // 局部注册的组件
   components: {
-    validateCode
+
   },
   // 组件状态值
   data() {
     return {
-      ruleForm: {
-        unsename: "",
-        password: "",
-      },
-      rules: {
-        unsename: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        yanzhengma:[{ required: true, message: "请输入验证码", trigger: "blur" }]
-      },
+      tableData: [],
     };
   },
   // 计算属性
   computed: {},
+
   // 侦听器
   watch: {},
   // 组件方法
-  methods: {},
+  methods: {
+    getAll() {
+      this.$axios.get("/tables.json").then((res) => {
+        console.log(res);
+        this.tableData = res.data;
+      });
+    },
+  },
   // 以下是生命周期钩子 注：没用到的钩子请自行删除
   /**
    * 在实例初始化之后，组件属性计算之前，如data属性等
@@ -77,7 +68,9 @@ export default {
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */
-  created() {},
+  created() {
+    this.getAll();
+  },
   /**
    * 在挂载开始之前被调用：相关的 render 函数首次被调用。
    */
@@ -122,53 +115,27 @@ export default {
 <!--然而子组件的根节点元素会同时被设置了scoped的父css样式和设置了scoped的子css样式影响，-->
 <!--这么设计的目的是父组件可以对子组件根元素进行布局。-->
 <style scoped>
-#app {
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.box-card {
   width: 100%;
-  background: burlywood;
-  height: 700px;
-  background: url("../assets/y6.jpg") 100% 100%;
 }
 .box {
-  width: 500px;
-  height: 300px;
-  background: #ffff;
-  position: fixed;
-  right: 100px;
-  top: 300px;
-  border-radius: 10px;
-}
-h1 {
-  color: #fff;
-  position: fixed;
-  top: 250px;
-  right: 150px;
-}
-.el-form {
-  width: 98%;
-  margin-top: 20px;
-}
-.el-input {
-  margin-left: -50px;
-}
-.input1{
-  width: 50%;
-  float: left;
-}
-.view{
-  position: fixed;
-  top: 58%;
-  left: 85%;
-}
-.btn{
-  float: right;
-  width: 180px;
-  margin-right: 50px;
-}
-.yan{
-  width: 45%;
-  height: 40px;
-  float: right;
-  border-radius: 5px;
-  margin-right: 50px;
+  font-size: 20px;
 }
 </style>
