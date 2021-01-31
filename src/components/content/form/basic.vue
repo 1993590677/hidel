@@ -4,7 +4,7 @@
       <div class="text item">
         <div class="box">基本表格（包含自定义模板，filter，分页组件）</div>
 
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="username" label="用户名" width="120">
           </el-table-column>
           <el-table-column label="头像" align="center" width="80">
@@ -18,12 +18,53 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="评分" prop="score" align="center" width="130">
+          <el-table-column label="评分" prop="score" align="center" width="180">
             <!-- <template slot-scope="scope">
               <score :size="36" :score="scope.row.score"></score>
             </template> -->
           </el-table-column>
+          <el-table-column prop="rateType" label="评价类型" width="80">
+            <template slot-scope="scope">
+              <div v-show="scope.row.rateType == '满意'">
+                {{scope.row.rateType}}
+              </div>
+              <div v-show="scope.row.rateType == '不满意'">
+                {{scope.row.rateType}}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="deliveryTime" label="送达时间" width="85">
+          </el-table-column>
+          <el-table-column prop="text" label="内容" width="180">
+          </el-table-column>
+          <el-table-column prop="recommend" label="推荐" width="200">
+               <template slot-scope="scope">
+                  <div class="recommend-tag" v-for="(recommend, index) in scope.row.recommend" :key="index">
+                    <el-tag>{{recommend}}</el-tag>
+                  </div>
+                </template>
+           
+          </el-table-column>
+          <el-table-column prop="rateTime" label="评价时间" width="160">
+            <template slot-scope="scope">
+              <div>
+                {{ scope.row.rateTime | dateFormat }}
+              </div>
+            </template>
+          </el-table-column>
         </el-table>
+        <!-- 分页器 -->
+         <div class="block">
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pagnum"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="pagsize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
+  </div>
       </div>
     </el-card>
   </div>
@@ -37,13 +78,14 @@ export default {
   // 组件参数 接收来自父组件的数据
   props: [],
   // 局部注册的组件
-  components: {
-
-  },
+  components: {},
   // 组件状态值
   data() {
     return {
       tableData: [],
+       total: null,
+        pagnum: 1,
+        pagsize: 5,
     };
   },
   // 计算属性
@@ -53,12 +95,33 @@ export default {
   watch: {},
   // 组件方法
   methods: {
+    getTableData(){
+      this.$axios.get('/tables.json').then(res=>{
+         this.tableData = res.data;
+      })
+    },
     getAll() {
-      this.$axios.get("/tables.json").then((res) => {
+      this.$axios.get(`/tables.json?pagenum=${this.pagnum}&pagesize=${this.pagsize}`).then((res) => {
         console.log(res);
         this.tableData = res.data;
+        this.tableData.forEach((item) => {
+          if (item.rateType == 0) {
+            item.rateType = "满意";
+          } else {
+            item.rateType = "不满意";
+          }
+        });
       });
     },
+    // 分页器
+      handleSizeChange(val) {
+        this.pagsize = val;
+        this.getAll();
+      },
+      handleCurrentChange(val) {
+        this.pagnum = val;
+        this.getAll();
+      },
   },
   // 以下是生命周期钩子 注：没用到的钩子请自行删除
   /**
@@ -114,7 +177,7 @@ export default {
 <!--使用了scoped属性之后，父组件的style样式将不会渗透到子组件中，-->
 <!--然而子组件的根节点元素会同时被设置了scoped的父css样式和设置了scoped的子css样式影响，-->
 <!--这么设计的目的是父组件可以对子组件根元素进行布局。-->
-<style scoped>
+<style lang='scss' scoped>
 .text {
   font-size: 14px;
 }
@@ -138,4 +201,13 @@ export default {
 .box {
   font-size: 20px;
 }
+  .recommend-tag {
+      display: inline-block;
+      margin: 4px 0;
+      margin-right: 4px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
 </style>

@@ -41,12 +41,12 @@
       background-color="#545c64"
       text-color="#fff">
        <el-menu-item index="/homePage">
-        <i class="el-icon-s-home"></i>
+        <i class="el-icon-s-home i"></i>
         <span slot="title">首页</span>
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">
-          <i class="el-icon-share"></i>
+          <i class="el-icon-share i"></i>
           <span>表格管理</span>
         </template>
         <el-menu-item-group>
@@ -57,18 +57,18 @@
       </el-submenu>
      <el-submenu index="3">
         <template slot="title">
-          <i class="el-icon-s-data"></i>
+          <i class="el-icon-s-data i"></i>
           <span>图标管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="3-1">柱状图</el-menu-item>
+          <el-menu-item index="/bar">柱状图</el-menu-item>
           <el-menu-item index="3-2">折线图</el-menu-item>
            <el-menu-item index="3-3">饼图</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
      <el-submenu index="4">
         <template slot="title">
-          <i class="el-icon-s-order"></i>
+          <i class="el-icon-s-order i"></i>
           <span>表单管理</span>
         </template>
         <el-menu-item-group>
@@ -76,23 +76,23 @@
         </el-menu-item-group>
       </el-submenu>
         <el-menu-item index="5">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-menu i"></i>
         <span slot="title">系统管理</span>
       </el-menu-item>
        <el-menu-item index="6">
-        <i class="el-icon-user-solid"></i>
+        <i class="el-icon-user-solid i"></i>
         <span slot="title">用户管理</span>
       </el-menu-item>
       <el-menu-item index="7">
-        <i class="el-icon-s-shop"></i>
+        <i class="el-icon-s-shop i"></i>
         <span slot="title">权限管理</span>
       </el-menu-item>
        <el-menu-item index="8">
-        <i class="el-icon-s-management"></i>
+        <i class="el-icon-s-management i"></i>
         <span slot="title">操作日常</span>
       </el-menu-item>
        <el-menu-item index="9">
-        <i class="el-icon-s-tools"></i>
+        <i class="el-icon-s-tools i"></i>
         <span slot="title">测试</span>
       </el-menu-item>
     </el-menu>
@@ -244,7 +244,7 @@ h1 {
 .el-menu{
     border: none; 
 }
-i{
+.i{
     color: #ffff;
 }
 </style>

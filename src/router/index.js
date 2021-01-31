@@ -36,6 +36,11 @@ const routes = [
           component: () =>
           import("../components/content/form/fliter.vue")
         },
+        {
+          path:'/bar',
+          component: () =>
+          import("../components/content/ester/bar.vue")
+        },
      
       ]
   }
