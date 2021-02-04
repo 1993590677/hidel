@@ -62,8 +62,8 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="/bar">柱状图</el-menu-item>
-          <el-menu-item index="3-2">折线图</el-menu-item>
-           <el-menu-item index="3-3">饼图</el-menu-item>
+          <el-menu-item index="/line">折线图</el-menu-item>
+           <el-menu-item index="/pie">饼图</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
      <el-submenu index="4">
@@ -91,7 +91,7 @@
         <i class="el-icon-s-management i"></i>
         <span slot="title">操作日常</span>
       </el-menu-item>
-       <el-menu-item index="9">
+       <el-menu-item index="/test">
         <i class="el-icon-s-tools i"></i>
         <span slot="title">测试</span>
       </el-menu-item>

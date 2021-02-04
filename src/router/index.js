@@ -41,7 +41,21 @@ const routes = [
           component: () =>
           import("../components/content/ester/bar.vue")
         },
-     
+        {
+          path:'/line',
+          component: () =>
+          import("../components/content/ester/line.vue")
+        },
+        {
+          path:'/pie',
+          component: () =>
+          import("../components/content/ester/pie.vue")
+        },
+        {
+          path:'/test',
+          component: () =>
+          import("../components/content/test.vue")
+        },
       ]
   }
 ];
